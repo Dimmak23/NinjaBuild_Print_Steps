@@ -1,0 +1,23 @@
+# VARIABLES
+cc = gcc
+cflags = -Wall -Wextra -Werror
+ldflags = -lm
+target = helloProgram
+source = main.c
+
+# RULES
+rule compile
+  description = Compiling $in to the $out...
+  command = printf " " && $cc $cflags -c $in -o $out
+
+rule link
+  description = Linking $in to the $out...  
+  command = printf " " && $cc $ldflags $in -o $out
+
+rule clean
+  description = Removing $target.o...
+  command = printf "" && rm -f $target.o
+
+build $target.o: compile $source
+build $target: link $target.o
+build clean: clean $target
